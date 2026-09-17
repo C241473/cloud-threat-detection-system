@@ -1,0 +1,22 @@
+# Python bytecode & cache
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Virtual environment
+venv/
+env/
+ENV/
+
+# Database files
+*.db
+*.sqlite3
+
+# Environment variables & secrets
+.env
+
+# Docker & IDE logs
+*.log
+.vscode/
+.idea/

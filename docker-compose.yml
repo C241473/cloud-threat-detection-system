@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: cloud_sec_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: secuser
+      POSTGRES_PASSWORD: secpassword
+      POSTGRES_DB: cloud_security_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U secuser -d cloud_security_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: .
+    container_name: cloud_sec_backend
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://secuser:secpassword@postgres:5432/cloud_security_db
+      - SECRET_KEY=production-jwt-super-secret-key-cloud-security-2026
+      - DEBUG=False
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  postgres_data:

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cloud Security Monitoring & Threat Detection System</title>
+  <link rel="stylesheet" href="/static/css/styles.css">
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <!-- Top Navigation Navbar -->
+  <header class="navbar">
+    <div class="brand">
+      <span class="brand-icon">🛡️</span>
+      <span>CYBER-SHIELD | Cloud Threat Monitor</span>
+    </div>
+    <div style="display: flex; gap: 1rem; align-items: center;">
+      <div class="status-badge">
+        <div class="pulse-dot"></div>
+        <span>ENGINE ACTIVE</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="dashboard-container">
+
+    <!-- Top Key Metrics Cards -->
+    <section class="metrics-grid">
+      <div class="metric-card events">
+        <div class="title">
+          <span>Total Security Events</span>
+          <span>📊</span>
+        </div>
+        <div class="value" id="val-total-events">0</div>
+        <span style="font-size: 0.8rem; color: var(--text-secondary);">Telemetry logs analyzed</span>
+      </div>
+
+      <div class="metric-card failed">
+        <div class="title">
+          <span>Failed Login Attempts</span>
+          <span>🔑</span>
+        </div>
+        <div class="value" id="val-failed-logins">0</div>
+        <span style="font-size: 0.8rem; color: var(--text-secondary);">Authentication failures</span>
+      </div>
+
+      <div class="metric-card threats">
+        <div class="title">
+          <span>Total Threats Detected</span>
+          <span>🚨</span>
+        </div>
+        <div class="value" id="val-total-threats">0</div>
+        <span style="font-size: 0.8rem; color: var(--text-secondary);">Intrusions flagged</span>
+      </div>
+
+      <div class="metric-card active">
+        <div class="title">
+          <span>Active Threats</span>
+          <span>⚡</span>
+        </div>
+        <div class="value" id="val-active-threats">0</div>
+        <span style="font-size: 0.8rem; color: var(--text-secondary);">Unresolved security alerts</span>
+      </div>
+    </section>
+
+    <!-- Interactive Simulation Bar -->
+    <section class="sim-bar">
+      <div>
+        <h3 style="font-size: 1.05rem; font-weight: 700;">🧪 Attack & Telemetry Simulator</h3>
+        <p style="font-size: 0.85rem; color: var(--text-secondary);">Simulate real-time security events to test detection engine rules</p>
+      </div>
+      <div class="sim-actions">
+        <button class="btn btn-danger" onclick="triggerBruteForceSim()">
+          <span>⚡ Trigger Brute Force (5 Failed Logins)</span>
+        </button>
+        <button class="btn btn-danger" style="background: rgba(139, 92, 246, 0.2); color: var(--accent-purple); border-color: rgba(139, 92, 246, 0.5);" onclick="triggerSQLiSim()">
+          <span>💥 Trigger SQL Injection</span>
+        </button>
+        <button class="btn btn-secondary" onclick="triggerNormalLogin()">
+          <span>✅ Simulate User Login</span>
+        </button>
+        <button class="btn btn-secondary" onclick="triggerAccessDenied()">
+          <span>🚫 Simulate Access Violation</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- IP Geolocation & Threat Intelligence Inspector -->
+    <section class="card">
+      <div class="card-header">
+        <div class="card-title">
+          <span>🌍 IP Geolocation & Threat Intelligence Inspector</span>
+        </div>
+      </div>
+      <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; margin-top: 0.5rem;">
+        <input type="text" id="ip-lookup-input" placeholder="Type IP Address (e.g. 8.8.8.8, 198.51.100.42)" style="flex: 1; min-width: 260px;">
+        <button class="btn btn-secondary" onclick="lookupIPInfo()">🔍 Lookup IP Intelligence</button>
+      </div>
+      <div id="ip-lookup-result" style="display: none; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; margin-top: 1rem;">
+        <!-- Dynamic Result -->
+      </div>
+    </section>
+
+    <!-- Cloud Server Metrics & Threat Charts Grid -->
+    <section class="charts-grid">
+      <!-- Chart 1: Threat Severity Breakdown -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <span>🛡️ Threat Severity Distribution</span>
+          </div>
+        </div>
+        <div class="chart-container">
+          <canvas id="threatSeverityChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Chart 2: Cloud Server Metrics -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <span>☁️ Cloud Infrastructure Hardware Metrics</span>
+          </div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 1.25rem; margin-top: 1rem;">
+          <div>
+            <div style="display: flex; justify-content: space-between; font-size: 0.9rem; font-weight: 600;">
+              <span>CPU Utilization</span>
+              <span id="cpu-val">0%</span>
+            </div>
+            <div class="progress-bar">
+              <div id="cpu-bar" class="progress-fill" style="width: 0%; background-color: var(--accent-cyan);"></div>
+            </div>
+          </div>
+
+          <div>
+            <div style="display: flex; justify-content: space-between; font-size: 0.9rem; font-weight: 600;">
+              <span>RAM Memory Usage</span>
+              <span id="mem-val">0%</span>
+            </div>
+            <div class="progress-bar">
+              <div id="mem-bar" class="progress-fill" style="width: 0%; background-color: var(--accent-purple);"></div>
+            </div>
+          </div>
+
+          <div>
+            <div style="display: flex; justify-content: space-between; font-size: 0.9rem; font-weight: 600;">
+              <span>Disk Volume Capacity</span>
+              <span id="disk-val">0%</span>
+            </div>
+            <div class="progress-bar">
+              <div id="disk-bar" class="progress-fill" style="width: 0%; background-color: var(--accent-green);"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Detected Threats Table Section -->
+    <section class="card">
+      <div class="card-header">
+        <div class="card-title">
+          <span>🚨 Detected Intrusions & Security Alerts</span>
+        </div>
+        <div class="filter-group">
+          <select id="threat-severity-filter" onchange="fetchThreats()">
+            <option value="ALL">Severity: All</option>
+            <option value="LOW">Low</option>
+            <option value="MEDIUM">Medium</option>
+            <option value="HIGH">High</option>
+            <option value="CRITICAL">Critical</option>
+          </select>
+
+          <select id="threat-status-filter" onchange="fetchThreats()">
+            <option value="ALL">Status: All</option>
+            <option value="ACTIVE">Active</option>
+            <option value="RESOLVED">Resolved</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>IP Address</th>
+              <th>Threat Type</th>
+              <th>Severity</th>
+              <th>Description</th>
+              <th>Detected At</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="threats-table-body">
+            <tr><td colspan="8" style="text-align: center;">Loading threat records...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Live Telemetry Stream Section -->
+    <section class="card">
+      <div class="card-header">
+        <div class="card-title">
+          <span>📜 Live Telemetry & Log Stream</span>
+        </div>
+        <div class="filter-group">
+          <select id="log-event-filter" onchange="fetchLogs()">
+            <option value="ALL">Event: All</option>
+            <option value="LOGIN_SUCCESS">Login Success</option>
+            <option value="LOGIN_FAILED">Login Failed</option>
+            <option value="ACCESS_DENIED">Access Denied</option>
+            <option value="SUSPICIOUS_REQUEST">Suspicious Request</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>IP Address</th>
+              <th>User</th>
+              <th>Event Type</th>
+              <th>Status</th>
+              <th>Details</th>
+            </tr>
+          </thead>
+          <tbody id="logs-table-body">
+            <tr><td colspan="6" style="text-align: center;">Loading security telemetry...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
