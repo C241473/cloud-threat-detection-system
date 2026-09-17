@@ -4,11 +4,12 @@ A complete full-stack Cyber Security solution featuring real-time telemetry log 
 
 ---
 
-## 🌐 Live Deployment Links
+## 🌐 Live Telemetry & Deployment Links
 
-- 🖥️ **Web SOC Dashboard UI**: [https://cloud-threat-detection-system.vercel.app/](https://cloud-threat-detection-system.vercel.app/)
-- 📜 **Interactive API Documentation (Swagger)**: [https://cloud-threat-detection-system.vercel.app/docs](https://cloud-threat-detection-system.vercel.app/docs)
-- 📐 **OpenAPI JSON Blueprint**: [https://cloud-threat-detection-system.vercel.app/openapi.json](https://cloud-threat-detection-system.vercel.app/openapi.json)
+- 🖥️ **Live Web SOC Dashboard UI**: [https://cyber-threat-monitor.loca.lt/](https://cyber-threat-monitor.loca.lt/)
+- 📜 **Interactive API Documentation (Swagger)**: [https://cyber-threat-monitor.loca.lt/docs](https://cyber-threat-monitor.loca.lt/docs)
+- 📐 **OpenAPI JSON Blueprint**: [https://cyber-threat-monitor.loca.lt/openapi.json](https://cyber-threat-monitor.loca.lt/openapi.json)
+- 🚀 **Vercel 1-Click Import & Deploy**: [Deploy to Vercel](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FC241473%2Fcloud-threat-detection-system)
 
 ---
 
