@@ -1,12 +1,18 @@
 import os
+import tempfile
 from pydantic_settings import BaseSettings
+
+# On Vercel / serverless environments, use system temp directory for writeable SQLite database
+default_db_path = "sqlite:///./security_monitor.db"
+if os.environ.get("VERCEL") or os.environ.get("AWS_LAMBDA_FUNCTION_NAME"):
+    default_db_path = f"sqlite:///{tempfile.gettempdir()}/security_monitor.db"
 
 class Settings(BaseSettings):
     APP_NAME: str = "Cloud Security Monitoring & Threat Detection System"
     DEBUG: bool = True
     
     # Database
-    DATABASE_URL: str = os.getenv("DATABASE_URL", "sqlite:///./security_monitor.db")
+    DATABASE_URL: str = os.getenv("DATABASE_URL", default_db_path)
     
     # Security / JWT
     SECRET_KEY: str = os.getenv("SECRET_KEY", "super-secret-key-cloud-security-threat-detector-2026")
