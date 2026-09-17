@@ -1,6 +1,14 @@
 # 🔐 Cloud Security Monitoring & Threat Detection System
 
-A complete full-stack Cyber Security solution featuring real-time telemetry log collection, automated threat detection engine (Brute-force, Rate Limiting, Access Violations, Privileged Escalation), modern dark-mode Security Operations Center (SOC) dashboard, JWT authentication with Argon2 password hashing, and containerized Docker setup for AWS deployment.
+A complete full-stack Cyber Security solution featuring real-time telemetry log collection, automated threat detection engine (Brute-force, SQL Injection, Rate Limiting, Access Violations, Privileged Escalation), modern dark-mode Security Operations Center (SOC) dashboard, JWT authentication with Argon2 password hashing, and containerized Docker / Vercel deployment.
+
+---
+
+## 🌐 Live Deployment Links
+
+- 🖥️ **Web SOC Dashboard UI**: [https://cloud-threat-detection-system.vercel.app/](https://cloud-threat-detection-system.vercel.app/)
+- 📜 **Interactive API Documentation (Swagger)**: [https://cloud-threat-detection-system.vercel.app/docs](https://cloud-threat-detection-system.vercel.app/docs)
+- 📐 **OpenAPI JSON Blueprint**: [https://cloud-threat-detection-system.vercel.app/openapi.json](https://cloud-threat-detection-system.vercel.app/openapi.json)
 
 ---
 
@@ -38,7 +46,7 @@ A complete full-stack Cyber Security solution featuring real-time telemetry log 
   🚨 Alert Dispatcher
          │
          ▼
-  ☁️ Docker / AWS EC2 Deployment
+  ☁️ Docker / Vercel / AWS EC2 Deployment
 ```
 
 ---
@@ -48,10 +56,10 @@ A complete full-stack Cyber Security solution featuring real-time telemetry log 
 * **Backend**: Python 3.11, FastAPI, Uvicorn, SQLAlchemy, Pydantic v2
 * **Security & Auth**: Argon2 Hashing, Passlib, JWT (JSON Web Tokens), OAuth2
 * **Database**: SQLite (Local Zero-Config) / PostgreSQL (Production & Docker)
-* **Frontend**: HTML5, Modern CSS (Tailwind/Custom SOC Dark Theme), Vanilla JavaScript, Chart.js
+* **Frontend**: HTML5, Modern CSS (SOC Dark Theme), Vanilla JavaScript, Chart.js
 * **Metrics**: `psutil` (Real-time CPU, RAM, Disk telemetry)
 * **Testing**: Pytest, FastAPI TestClient
-* **DevOps**: Docker, Docker Compose
+* **DevOps**: Docker, Docker Compose, Vercel Serverless
 
 ---
 
@@ -59,6 +67,8 @@ A complete full-stack Cyber Security solution featuring real-time telemetry log 
 
 ```text
 cloud-security-monitor/
+├── api/
+│   └── index.py               # Vercel Serverless entry point
 ├── backend/
 │   ├── main.py                # FastAPI entry point & CORS configuration
 │   ├── config.py              # App settings & threat threshold config
@@ -86,6 +96,7 @@ cloud-security-monitor/
 ├── .env.example               # Environment variables template
 ├── Dockerfile                 # Multi-stage Python container build
 ├── docker-compose.yml         # FastAPI + PostgreSQL container orchestration
+├── vercel.json                # Vercel deployment configuration
 ├── requirements.txt           # Python dependencies
 └── README.md                  # Project documentation
 ```
@@ -131,14 +142,17 @@ docker-compose up --build -d
 1. **Brute-Force Login Detection**:
    * *Rule*: `5 failed login attempts` from the same IP within `5 minutes`.
    * *Severity*: **HIGH**
-2. **Automated Request Flooding (Rate Limiting)**:
+2. **SQL Injection & Malicious Payload Detection**:
+   * *Rule*: Malicious SQL payloads (`' OR '1'='1'`, `UNION SELECT`, `<script>`).
+   * *Severity*: **CRITICAL**
+3. **Automated Request Flooding (Rate Limiting)**:
    * *Rule*: `>= 50 requests` from the same IP within `1 minute`.
    * *Severity*: **MEDIUM**
-3. **Unauthorized Access Violation**:
+4. **Unauthorized Access Violation**:
    * *Rule*: `3+ ACCESS_DENIED` events for forbidden resources.
    * *Severity*: **HIGH**
-4. **Suspicious Privileged Activity**:
-   * *Rule*: Failed logins or unauthorized attempts targeted at privileged accounts (`admin`, `root`).
+5. **Suspicious Privileged Activity**:
+   * *Rule*: Failed logins targeted at privileged accounts (`admin`, `root`).
    * *Severity*: **CRITICAL**
 
 ---
@@ -147,23 +161,17 @@ docker-compose up --build -d
 
 ```bash
 # Execute pytest test suite
-pytest
+pytest -v
 ```
 
 ---
 
-## ☁️ AWS Deployment Steps
+## ☁️ AWS / Cloud Deployment Steps
 
 1. Launch an **AWS EC2 Instance** (Ubuntu 22.04 LTS, t2.micro / t3.small).
 2. Configure **Security Group** Inbound Rules:
-   * Port 22 (SSH)
-   * Port 80 / 443 (HTTP/HTTPS)
-   * Port 8000 (FastAPI API)
-3. SSH into EC2 instance and install Docker & Docker Compose:
-   ```bash
-   sudo apt update && sudo apt install -y docker.io docker-compose
-   ```
-4. Git clone your repository onto EC2, then run:
+   * Port 22 (SSH), Port 80/443 (HTTP/HTTPS), Port 8000 (FastAPI).
+3. SSH into EC2 instance and run:
    ```bash
    docker-compose up --build -d
    ```
