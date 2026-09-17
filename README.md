@@ -6,9 +6,9 @@ A complete full-stack Cyber Security solution featuring real-time telemetry log 
 
 ## 🌐 Verified Live Deployment Links (Vercel Production)
 
-- 🖥️ **Web SOC Dashboard UI**: [https://cloud-security-monitor-lovat.vercel.app/](https://cloud-security-monitor-lovat.vercel.app/)
-- 📜 **Interactive API Documentation (Swagger)**: [https://cloud-security-monitor-lovat.vercel.app/docs](https://cloud-security-monitor-lovat.vercel.app/docs)
-- 📊 **Real-Time Telemetry API Endpoint**: [https://cloud-security-monitor-lovat.vercel.app/api/dashboard/stats](https://cloud-security-monitor-lovat.vercel.app/api/dashboard/stats)
+- **Dashboard**: [https://cloud-security-monitor-lovat.vercel.app/](https://cloud-security-monitor-lovat.vercel.app/)
+- **Swagger API Docs**: [https://cloud-security-monitor-lovat.vercel.app/docs](https://cloud-security-monitor-lovat.vercel.app/docs)
+- **API**: [https://cloud-security-monitor-lovat.vercel.app/api/dashboard/stats](https://cloud-security-monitor-lovat.vercel.app/api/dashboard/stats)
 - 🐙 **GitHub Repository**: [https://github.com/C241473/cloud-threat-detection-system](https://github.com/C241473/cloud-threat-detection-system)
 
 ---
