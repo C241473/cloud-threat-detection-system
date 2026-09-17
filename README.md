@@ -4,12 +4,12 @@ A complete full-stack Cyber Security solution featuring real-time telemetry log 
 
 ---
 
-## 🌐 Live Telemetry & Deployment Links
+## 🌐 Verified Live Deployment Links (Vercel Production)
 
-- 🖥️ **Live Web SOC Dashboard UI**: [https://cyber-threat-monitor.loca.lt/](https://cyber-threat-monitor.loca.lt/)
-- 📜 **Interactive API Documentation (Swagger)**: [https://cyber-threat-monitor.loca.lt/docs](https://cyber-threat-monitor.loca.lt/docs)
-- 📐 **OpenAPI JSON Blueprint**: [https://cyber-threat-monitor.loca.lt/openapi.json](https://cyber-threat-monitor.loca.lt/openapi.json)
-- 🚀 **Vercel 1-Click Import & Deploy**: [Deploy to Vercel](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FC241473%2Fcloud-threat-detection-system)
+- 🖥️ **Web SOC Dashboard UI**: [https://cloud-security-monitor-lovat.vercel.app/](https://cloud-security-monitor-lovat.vercel.app/)
+- 📜 **Interactive API Documentation (Swagger)**: [https://cloud-security-monitor-lovat.vercel.app/docs](https://cloud-security-monitor-lovat.vercel.app/docs)
+- 📊 **Real-Time Telemetry API Endpoint**: [https://cloud-security-monitor-lovat.vercel.app/api/dashboard/stats](https://cloud-security-monitor-lovat.vercel.app/api/dashboard/stats)
+- 🐙 **GitHub Repository**: [https://github.com/C241473/cloud-threat-detection-system](https://github.com/C241473/cloud-threat-detection-system)
 
 ---
 
@@ -47,7 +47,7 @@ A complete full-stack Cyber Security solution featuring real-time telemetry log 
   🚨 Alert Dispatcher
          │
          ▼
-  ☁️ Docker / Vercel / AWS EC2 Deployment
+  ☁️ Docker / Vercel Serverless Deployment
 ```
 
 ---
@@ -123,19 +123,6 @@ pip install -r requirements.txt
 uvicorn backend.main:app --reload --port 8000
 ```
 
-Open your browser and visit:
-* **Interactive Dashboard**: `http://localhost:8000/`
-* **Swagger API Docs**: `http://localhost:8000/docs`
-
----
-
-### 2. Docker Setup (With PostgreSQL)
-
-```bash
-# Start backend and PostgreSQL database containers
-docker-compose up --build -d
-```
-
 ---
 
 ## 🛡️ Intrusion Detection Rules
@@ -164,15 +151,3 @@ docker-compose up --build -d
 # Execute pytest test suite
 pytest -v
 ```
-
----
-
-## ☁️ AWS / Cloud Deployment Steps
-
-1. Launch an **AWS EC2 Instance** (Ubuntu 22.04 LTS, t2.micro / t3.small).
-2. Configure **Security Group** Inbound Rules:
-   * Port 22 (SSH), Port 80/443 (HTTP/HTTPS), Port 8000 (FastAPI).
-3. SSH into EC2 instance and run:
-   ```bash
-   docker-compose up --build -d
-   ```
